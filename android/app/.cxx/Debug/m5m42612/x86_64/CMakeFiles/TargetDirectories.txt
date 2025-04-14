@@ -1,2 +1,0 @@
-C:/Users/Syed Rafi/Documents/GitHub/DIU_BusBuddy/android/app/.cxx/Debug/m5m42612/x86_64/CMakeFiles/edit_cache.dir
-C:/Users/Syed Rafi/Documents/GitHub/DIU_BusBuddy/android/app/.cxx/Debug/m5m42612/x86_64/CMakeFiles/rebuild_cache.dir

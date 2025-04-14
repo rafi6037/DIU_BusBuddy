@@ -1,3 +1,4 @@
+import 'package:diubusbuddy/auth/login.dart';
 import 'package:diubusbuddy/screens/aelrt_page.dart';
 import 'package:flutter/material.dart';
 import '../models/bus_route.dart';
@@ -6,6 +7,7 @@ import '../widgets/route_card.dart';
 import 'route_details_page.dart';
 import 'search_page.dart';
 import 'route_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +20,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   late TabController _tabController;
   List<BusRoute> _routes = [];
   int _currentIndex = 0;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -39,6 +42,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  // Firebase logout function
+  Future<void> _logout() async {
+    try {
+      await _auth.signOut();
+      // Navigate to login page after logout
+      if (!mounted) return;
+      
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error logging out: $e')),
+      );
+    }
   }
 
   @override
@@ -90,13 +113,24 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'DIU BusBuddy',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'DIU BusBuddy',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              // Logout icon button
+              IconButton(
+                onPressed: _logout,
+                icon: const Icon(Icons.logout, color: Colors.white),
+                tooltip: 'Logout',
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           InkWell(

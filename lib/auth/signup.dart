@@ -146,6 +146,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
           ),
+
           // Signup form
           SingleChildScrollView(
             child: Padding(
@@ -153,7 +154,7 @@ class _SignupPageState extends State<SignupPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: screenHeight * 0.25), // Space for animation
+                  SizedBox(height: screenHeight * 0.35), // Space for animation
                   Text(
                     'Create Account',
                     style: TextStyle(
